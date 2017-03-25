@@ -7,11 +7,11 @@
 	</head>
 	<body>
 		<script src="three.min.js"></script>
-    
-    <!-- ---------------- Custom Shader Code ------------------------ -->
+
+    <!------------------ Custom Shader Code -------------------------->
     <script id="vertexShader" type="x-shader/x-vertex">
     varying vec3 vNormal;
-    void main() 
+    void main()
     {
         vNormal = normalize( normalMatrix * normal );
         gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
@@ -19,58 +19,58 @@
     </script>
 
     <!-- fragment shader a.k.a. pixel shader -->
-    <script id="fragmentShader" type="x-shader/x-vertex"> 
+    <script id="fragmentShader" type="x-shader/x-vertex">
     varying vec3 vNormal;
-    void main() 
+    void main()
     {
-      float intensity = pow( 0.7 - dot( vNormal, vec3( 0.0, 0.0, 1.0 ) ), 2.0 ); 
+      float intensity = pow( 0.7 - dot( vNormal, vec3( 0.0, 0.0, 1.0 ) ), 2.0 );
         gl_FragColor = vec4( 1.0, 1.0, 1.0, 1.0 ) * intensity;
     }
     </script>
-    <!-- ----------------------------------------------------------- -->
+    <!--------------------------------------------------------------->
     <h1> Заглавие </h1>
 		<script>
-			
+
 			var renderer = new THREE.WebGLRenderer();
 			renderer.setSize( window.innerWidth/2, window.innerHeight/2 );
 			document.body.appendChild( renderer.domElement );
 
 			var scene = new THREE.Scene();
-			
+
 			var camera = new THREE.PerspectiveCamera( 30, window.innerWidth/window.innerHeight, 0.1, 1000 );
 			camera.position.set(0,0,8);
 			camera.lookAt(new THREE.Vector3(0,0,0));
-      
+
       //plane for the background with custom image(not working with chrome)
       /*
       var loader = new THREE.TextureLoader();
-      var texture1 = loader.load( 'sky.jpg' );               
-      var backgroundMesh = new THREE.Mesh( 
+      var texture1 = loader.load( 'sky.jpg' );
+      var backgroundMesh = new THREE.Mesh(
       new THREE.PlaneGeometry(1178/17, 663/17,8,8),
       new THREE.MeshBasicMaterial({
          map: texture1
       }));
-    
+
       backgroundMesh.position.set(0, 0, -20);
-    
+
 
 
       backgroundMesh.material.depthTest = false;
       backgroundMesh.material.depthWrite = false;
       scene.add(backgroundMesh);
       */
-      
+
 			var geometry = new THREE.SphereGeometry( 1, 32, 32 );
 
 			var material = new THREE.MeshPhongMaterial();
       sphere = new THREE.Mesh( geometry, material);
       scene.add( sphere );
       //var texture = new THREE.TextureLoader().load( "img2.jpg" );
-			
+
 			scene.add( new THREE.AmbientLight('white',1) );
-      
+
       // shader for the glow
-      var customMaterial = new THREE.ShaderMaterial( 
+      var customMaterial = new THREE.ShaderMaterial(
       {
           uniforms: {  },
         vertexShader:   document.getElementById( 'vertexShader'   ).textContent,
@@ -79,11 +79,11 @@
         blending: THREE.AdditiveBlending,
         transparent: true
       }   );
-        
+
       var ballGeometry = new THREE.SphereGeometry( 1.08, 32, 16 );
       var ball = new THREE.Mesh( ballGeometry, customMaterial );
       scene.add( ball );
-      
+
       //animation about how colours can be changed through time
       /*
       var t = 0;
@@ -96,7 +96,7 @@
 			}
       /*
       animate = function (t)
-			{ 
+			{
         if(t<230)
         {camera.position.z -= 0.015;
          backgroundMesh.position.z -= 0.015;
@@ -105,19 +105,19 @@
       }
       */
 			//drawFrame();
-      
-      
+
+
       function showValue(temp)
-      { 
+      {
         temp = temp/100;
         var red = 0;
         var green = 0;
         var blue = 0;
-        
+
         //calculate red
         if(temp <= 66)
         {
-          red = 255;   
+          red = 255;
         }
         else
         {
@@ -130,9 +130,9 @@
           if(red > 255)
           {
             red  = 255;
-          }       
+          }
         }
-        
+
         //calculate green
         if(temp <= 66)
         {
@@ -145,7 +145,7 @@
           if(green > 255)
           {
             green = 255;
-          }       
+          }
         }
         else
         {
@@ -158,9 +158,9 @@
           if(green > 255)
           {
             green = 255;
-          }     
+          }
         }
-        
+
         //calculate blue
         if(temp >= 66)
         {
@@ -183,16 +183,16 @@
             if(blue > 255)
             {
               blue = 255;
-            }     
-          }       
+            }
+          }
         }
-        
+
         sphere.material.color.set( 'rgb('+ Math.round(red) +', ' + Math.round(green) + ', '+ Math.round(blue) + ')');
         renderer.render( scene, camera );
-        document.getElementById("range").innerHTML=temp*100;       
+        document.getElementById("range").innerHTML=temp*100;
       }
       showValue(1000);
-      
+
 		</script>
     <br>
     <input type="range" min="1000" max="40000" value="1000" step="5" oninput="showVal(this.value)" onchange="showValue(this.value)" />
