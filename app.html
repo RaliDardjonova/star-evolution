@@ -1,4 +1,4 @@
-﻿<html>
+<html>
 	<head>
 		<style>
 			body { margin-left: 10%; }
@@ -7,8 +7,10 @@
 	</head>
 	<body>
 		<script src="three.min.js"></script>
+		<script src="TrackballControls.js"></script>
+		<script src="helper.js"></script>
 
-    <!------------------ Custom Shader Code -------------------------->
+    <!-- Custom Shader Code -------------------------->
     <script id="vertexShader" type="x-shader/x-vertex">
     varying vec3 vNormal;
     void main()
@@ -20,181 +22,115 @@
 
     <!-- fragment shader a.k.a. pixel shader -->
     <script id="fragmentShader" type="x-shader/x-vertex">
-    varying vec3 vNormal;
+    	varying vec3 vNormal;
+			uniform vec3 color;
+
     void main()
     {
-      float intensity = pow( 0.7 - dot( vNormal, vec3( 0.0, 0.0, 1.0 ) ), 2.0 );
-        gl_FragColor = vec4( 1.0, 1.0, 1.0, 1.0 ) * intensity;
+      float intensity = pow( 0.7 - dot( vNormal, vec3( 0.0, 0.0, 0.8 ) ), 2.0 );
+        gl_FragColor = vec4( color, 1.0 ) * intensity;
     }
     </script>
     <!--------------------------------------------------------------->
     <h1> Заглавие </h1>
 		<script>
-
 			var renderer = new THREE.WebGLRenderer();
 			renderer.setSize( window.innerWidth/2, window.innerHeight/2 );
 			document.body.appendChild( renderer.domElement );
-
 			var scene = new THREE.Scene();
-
 			var camera = new THREE.PerspectiveCamera( 30, window.innerWidth/window.innerHeight, 0.1, 1000 );
 			camera.position.set(0,0,8);
 			camera.lookAt(new THREE.Vector3(0,0,0));
 
-      //plane for the background with custom image(not working with chrome)
-      /*
-      var loader = new THREE.TextureLoader();
-      var texture1 = loader.load( 'sky.jpg' );
-      var backgroundMesh = new THREE.Mesh(
-      new THREE.PlaneGeometry(1178/17, 663/17,8,8),
-      new THREE.MeshBasicMaterial({
-         map: texture1
-      }));
+			//controling with the mouse
+			var controls = new THREE.TrackballControls( camera,  renderer.domElement );
+			controls.rotateSpeed = 1.0;
+			controls.zoomSpeed = 1.2;
+			controls.panSpeed = 0.8;
+			controls.noZoom = false;
+			controls.noPan = false;
+			controls.staticMoving = true;
+			controls.dynamicDampingFactor = 0.3;
 
-      backgroundMesh.position.set(0, 0, -20);
-
-
-
-      backgroundMesh.material.depthTest = false;
-      backgroundMesh.material.depthWrite = false;
-      scene.add(backgroundMesh);
-      */
-
+			//main sphere
 			var geometry = new THREE.SphereGeometry( 1, 32, 32 );
-
-			var material = new THREE.MeshPhongMaterial();
-      sphere = new THREE.Mesh( geometry, material);
+			geometry.dynamic = true;
+			var texture = new THREE.ImageUtils.loadTexture( 'img8.jpg' );
+			var material1 = new THREE.MeshBasicMaterial( { map: texture } );
+      sphere = new THREE.Mesh( geometry, material1);
       scene.add( sphere );
-      //var texture = new THREE.TextureLoader().load( "img2.jpg" );
 
-			scene.add( new THREE.AmbientLight('white',1) );
+			var previous = [];
+			for (var i=0; i<geometry.vertices.length; i++)
+			{
+				previous[i] = 1;
+			}
+
+			//sample static sphere
+			var geometry3 = new THREE.SphereGeometry( 1, 8, 8 );
+			var material2 = new THREE.MeshPhongMaterial({color:'goldenrod', transparent: true, opacity: 0.2, wireframe: true});
+			sphere2 = new THREE.Mesh( geometry3, material2);
+			sphere2.position.set(3.5, 0, 0);
+      scene.add( sphere2 );
+
+			//ambient light
+			scene.add( new THREE.AmbientLight('white',2) );
 
       // shader for the glow
       var customMaterial = new THREE.ShaderMaterial(
       {
-          uniforms: {  },
+        uniforms: { color: {type: "c", value: new THREE.Color("rgb(0, 0, 0)")}},
         vertexShader:   document.getElementById( 'vertexShader'   ).textContent,
         fragmentShader: document.getElementById( 'fragmentShader' ).textContent,
-        side: THREE.BackSide,
         blending: THREE.AdditiveBlending,
+				depthWrite: 	false,
+				polygonOffset: true,
+				polygonOffsetFactor: -10,
+				polygonOffsetUnits: 100,
         transparent: true
       }   );
-
-      var ballGeometry = new THREE.SphereGeometry( 1.08, 32, 16 );
+      var ballGeometry = new THREE.SphereGeometry( 1.1, 32, 16 );
+			ballGeometry.dynamic = true;
       var ball = new THREE.Mesh( ballGeometry, customMaterial );
       scene.add( ball );
 
-      //animation about how colours can be changed through time
-      /*
+			//---------------------------------------------------
+			var customMaterial2 = new THREE.ShaderMaterial(
+			{
+				uniforms: { color: {type: "c", value: new THREE.Color("rgb(0, 0, 0)")}},
+				vertexShader:   document.getElementById( 'vertexShader'   ).textContent,
+				fragmentShader: document.getElementById( 'fragmentShader' ).textContent,
+				side: THREE.BackSide,
+				blending: THREE.AdditiveBlending,
+				transparent: true
+			}   );
+
+			var ballGeometry2 = new THREE.SphereGeometry( 1.2, 32, 16 );
+			var ball2 = new THREE.Mesh( ballGeometry2, customMaterial2 );
+			scene.add( ball2 );
+			//----------------------------------------------
+			var previous2 = [];
+
+			for (var i=0; i<ballGeometry.vertices.length; i++)
+			{
+				previous2[i] = 1;
+			}
+
       var t = 0;
       function drawFrame()
 			{
-				//requestAnimationFrame( drawFrame );
-        sphere.material.color.set( 'rgb('+ 100 +', ' + 100 + ', '+ 100 + ')');
-        //if (animate) animate(t++);
-				//renderer.render( scene, camera );
+				requestAnimationFrame( drawFrame );
+
+        if (animate) animate(t++);
+				controls.update();
+				renderer.render( scene, camera );
 			}
-      /*
-      animate = function (t)
-			{
-        if(t<230)
-        {camera.position.z -= 0.015;
-         backgroundMesh.position.z -= 0.015;
-         sphere.material.color.set( 'rgb('+ (136 + t/2) +', ' + (68 - t/4) + ', '+ (68 - t/4) + ')');
-        }
-      }
-      */
-			//drawFrame();
 
-
-      function showValue(temp)
-      {
-        temp = temp/100;
-        var red = 0;
-        var green = 0;
-        var blue = 0;
-
-        //calculate red
-        if(temp <= 66)
-        {
-          red = 255;
-        }
-        else
-        {
-          red = temp - 60;
-          red = 329.698727446 * Math.pow(red, -0.1332047592);
-          if(red < 0)
-          {
-            red = 0;
-          }
-          if(red > 255)
-          {
-            red  = 255;
-          }
-        }
-
-        //calculate green
-        if(temp <= 66)
-        {
-          green = temp;
-          green = 99.4708025861 * Math.log(green) - 161.1195681661;
-          if(green < 0)
-          {
-            green = 0;
-          }
-          if(green > 255)
-          {
-            green = 255;
-          }
-        }
-        else
-        {
-          green = temp - 60;
-          green = 288.1221695283 * Math.pow(green, -0.0755148492);
-          if(green < 0)
-          {
-            green = 0;
-          }
-          if(green > 255)
-          {
-            green = 255;
-          }
-        }
-
-        //calculate blue
-        if(temp >= 66)
-        {
-          blue = 255;
-        }
-        else
-        {
-          if(temp <= 19)
-          {
-            blue = 0;
-          }
-          else
-          {
-            blue = temp - 10;
-            blue = 138.5177312231 * Math.log(blue) - 305.0447927307;
-            if(blue < 0)
-            {
-              blue = 0;
-            }
-            if(blue > 255)
-            {
-              blue = 255;
-            }
-          }
-        }
-
-        sphere.material.color.set( 'rgb('+ Math.round(red) +', ' + Math.round(green) + ', '+ Math.round(blue) + ')');
-        renderer.render( scene, camera );
-        document.getElementById("range").innerHTML=temp*100;
-      }
+			drawFrame();
       showValue(1000);
-
 		</script>
     <br>
+		<br>
     <input type="range" min="1000" max="40000" value="1000" step="5" oninput="showVal(this.value)" onchange="showValue(this.value)" />
     <span id="range">1000</span>
     <br>
