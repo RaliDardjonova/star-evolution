@@ -10,10 +10,16 @@
         valueSpanId = '#' + slider.id + 'Value';
 
       if (slider.id == 'tempRange') {
-        showValue(e.value);
+        if(e.value == 0)
+        {
+          showValue(6000);
+        }
+        else {
+          showValue(1000);
+        }
       }
 
-    	$(valueSpanId).html(e.value);
+    	$(valueSpanId).html(Math.pow(10, e.value));
     });
 
     for (var i = 0; i < sliders.length; i++) {

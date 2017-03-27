@@ -114,6 +114,12 @@ animate = function (t)
    ball2.scale.z = 1 + t/1000;
   }
 
+  //animateCorona(t);
+
+}
+
+function animateCorona(t)
+{
   for (var i=0; i<sphere.geometry.vertices.length; i++)
   {
       curr = 0.98 + 0.04*Math.sin(i*11 + t/50); //+ 0.05*Math.sin((t)/12);
@@ -127,12 +133,12 @@ animate = function (t)
   sphere.geometry.verticesNeedUpdate = true;
 
 
-for (var i=0; i<ballGeometry.vertices.length; i += 1)
-{	curr = 0.95 + 0.1*Math.sin( i%5 + t/100);
-  ball.geometry.vertices[i].multiplyScalar(1/previous2[i]);
-  ball.geometry.vertices[i].multiplyScalar(curr);
-  previous2[i] = curr;
-}
-ball.geometry.computeVertexNormals();
-ball.geometry.verticesNeedUpdate = true;
+  for (var i=0; i<ballGeometry.vertices.length; i += 1)
+  {	curr = 0.95 + 0.1*Math.sin( i%5 + t/100);
+    ball.geometry.vertices[i].multiplyScalar(1/previous2[i]);
+    ball.geometry.vertices[i].multiplyScalar(curr);
+    previous2[i] = curr;
+  }
+  ball.geometry.computeVertexNormals();
+  ball.geometry.verticesNeedUpdate = true;
 }

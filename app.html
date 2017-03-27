@@ -4,6 +4,7 @@
 			body { margin-left: 10%; }
 			canvas { width: 100%; height: 100% }
 		</style>
+		<meta charset="UTF-8">
 		<link href="libs/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
 		<link href="libs/bootstrap-slider/bootstrap-slider.min.css" rel="stylesheet">
 	</head>
@@ -19,9 +20,12 @@
 
 				</div>
 				<div class="col-md-4">
-					<input id="tempRange" type="range" data-slider-min="1000" data-slider-max="40000" data-slider-value="1000" data-slider-step="5"/>
+					<input id="tempRange" type="range" data-slider-min="-1" data-slider-max="2" data-slider-value="0" data-slider-step="1"/>
 					<br>
-			    <span>Температура: <span id="tempRangeValue">1000</span>К </span>
+			    <span>Слънчеви маси: <span id="tempRangeValue">1</span></span>
+					<br>
+					<br>
+					<button type="submit" onclick="animateLife(document.getElementById('tempRange'))" class="btn btn-default">Пусни анимацията</button>
 				</div>
 
 			</div>
@@ -94,11 +98,13 @@
 			}
 
 			//sample static sphere
+			/*
 			var geometry3 = new THREE.SphereGeometry( 1, 8, 8 );
 			var material2 = new THREE.MeshPhongMaterial({color:'goldenrod', transparent: true, opacity: 0.2, wireframe: true});
 			sphere2 = new THREE.Mesh( geometry3, material2);
 			sphere2.position.set(3.5, 0, 0);
       scene.add( sphere2 );
+			*/
 
 			//ambient light
 			scene.add( new THREE.AmbientLight('white',2) );
@@ -142,19 +148,27 @@
 			{
 				previous2[i] = 1;
 			}
-
+			showValue(6000);
       var t = 0;
       function drawFrame()
 			{
 				requestAnimationFrame( drawFrame );
-
-        if (animate) animate(t++);
+        if (animateCorona) animateCorona(t++);
 				controls.update();
 				renderer.render( scene, camera );
 			}
 
+			var k=0;
+			function animateLife(mass)
+			{
+				requestAnimationFrame(animateLife);
+				if(animate) animate(k++);
+				controls.update();
+				renderer.render(scene, camera);
+			}
+
 			drawFrame();
-      showValue(1000);
+
 		</script>
 	</body>
 </html>
