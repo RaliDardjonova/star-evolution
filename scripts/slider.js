@@ -9,15 +9,19 @@
       var slider = e.target,
         valueSpanId = '#' + slider.id + 'Value';
 
-<<<<<<< HEAD
       if (slider.id == 'tempRange') {
-      
+        if(e.value == 0)
+        {
+          showValue(6000);
+        }
+        else {
+          showValue(1000);
+        }
 
         $(valueSpanId).html(Math.pow(10, e.value));
       } else if (slider.id == lifespanSliderId) {
         statsView.html(timeControl.update(e.value));
         $(valueSpanId).html(slider.value);
->>>>>>> ae4d212c5c5cbde35c1db062eca5615ba2c8d5e0
       }
     });
 
