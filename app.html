@@ -15,9 +15,9 @@
 				<div class="col-md-8">
 					<div id="scene"></div>
 					<label for="lifespan">Живот</label>
-					<input type="range" id="lifespan" data-slider-value="0" name="lifespan" data-slider-min="0" data-slider-step="1" data-slider-max="60">
+					<input type="range" id="lifespan" max="60" min="0" step="1" data-slider-value="0" name="lifespan" data-slider-min="0" data-slider-step="1" data-slider-max="60">
 					<span>Секунди: <span id="lifespanValue"> </span> </span>
-
+					<p id="stats"></p>
 				</div>
 				<div class="col-md-4">
 					<input id="tempRange" type="range" data-slider-min="-1" data-slider-max="2" data-slider-value="0" data-slider-step="1"/>
@@ -37,6 +37,7 @@
 		<script src="libs/three.min.js"></script>
 		<script src="scripts/TrackballControls.js"></script>
 		<script src="scripts/helper.js"></script>
+		<script src="scripts/timeControl.js"></script>
 		<script src="scripts/slider.js"></script>
 
     <!-- Custom Shader Code -------------------------->

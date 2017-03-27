@@ -1,4 +1,11 @@
-(function ($) {
+(function ($, TimeControl) {
+  //To become mass slider probably
+  var temperatureSliderId = 'tempRange',
+    lifespanSliderId = 'lifespan',
+    lifespanSlider = $('#' + lifespanSliderId),
+    timeControl = new TimeControl(lifespanSlider),
+    statsView = $('#stats');
+
   function setStyle(slider, startPoints = [0]) {
     $(slider).slider();
   }
@@ -9,6 +16,7 @@
       var slider = e.target,
         valueSpanId = '#' + slider.id + 'Value';
 
+<<<<<<< HEAD
       if (slider.id == 'tempRange') {
         if(e.value == 0)
         {
@@ -17,6 +25,12 @@
         else {
           showValue(1000);
         }
+=======
+      if (slider.id == temperatureSliderId) {
+        showValue(e.value);
+      } else if (slider.id == lifespanSliderId) {
+        statsView.html(timeControl.update(e.value));
+>>>>>>> 11706de61c66f5062756f9718bbaaf4296c73a9c
       }
 
     	$(valueSpanId).html(Math.pow(10, e.value));
@@ -27,4 +41,4 @@
       setStyle(slider);
     }
   });
-})(jQuery);
+})(jQuery, TimeControl);
