@@ -4,11 +4,36 @@
 			body { margin-left: 10%; }
 			canvas { width: 100%; height: 100% }
 		</style>
+		<link href="libs/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="libs/bootstrap-slider/bootstrap-slider.min.css" rel="stylesheet">
 	</head>
 	<body>
-		<script src="three.min.js"></script>
-		<script src="TrackballControls.js"></script>
-		<script src="helper.js"></script>
+		<div class="container">
+			<h1> Заглавие </h1>
+			<div class="row">
+				<div class="col-md-8">
+					<div id="scene"></div>
+					<label for="lifespan">Живот</label>
+					<input type="range" id="lifespan" data-slider-value="0" name="lifespan" data-slider-min="0" data-slider-step="1" data-slider-max="60">
+					<span>Секунди: <span id="lifespanValue"> </span> </span>
+
+				</div>
+				<div class="col-md-4">
+					<input id="tempRange" type="range" data-slider-min="1000" data-slider-max="40000" data-slider-value="1000" data-slider-step="5"/>
+					<br>
+			    <span>Температура: <span id="tempRangeValue">1000</span>К </span>
+				</div>
+
+			</div>
+		</div>
+
+		<script src="libs/jquery-3.2.0.min.js"></script>
+		<script src="libs/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+		<script src="libs/bootstrap-slider/bootstrap-slider.min.js"></script>
+		<script src="libs/three.min.js"></script>
+		<script src="scripts/TrackballControls.js"></script>
+		<script src="scripts/helper.js"></script>
+		<script src="scripts/slider.js"></script>
 
     <!-- Custom Shader Code -------------------------->
     <script id="vertexShader" type="x-shader/x-vertex">
@@ -32,11 +57,13 @@
     }
     </script>
     <!--------------------------------------------------------------->
-    <h1> Заглавие </h1>
+
 		<script>
+			var sceneView = $('#scene');
 			var renderer = new THREE.WebGLRenderer();
-			renderer.setSize( window.innerWidth/2, window.innerHeight/2 );
-			document.body.appendChild( renderer.domElement );
+			renderer.setSize(sceneView.width(), window.innerHeight/2 );
+			sceneView.append(renderer.domElement)
+
 			var scene = new THREE.Scene();
 			var camera = new THREE.PerspectiveCamera( 30, window.innerWidth/window.innerHeight, 0.1, 1000 );
 			camera.position.set(0,0,8);
@@ -129,10 +156,5 @@
 			drawFrame();
       showValue(1000);
 		</script>
-    <br>
-		<br>
-    <input type="range" min="1000" max="40000" value="1000" step="5" oninput="showVal(this.value)" onchange="showValue(this.value)" />
-    <span id="range">1000</span>
-    <br>
 	</body>
 </html>

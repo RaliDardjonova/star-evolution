@@ -15,6 +15,7 @@ scene.add(backgroundMesh);
 //changes colour depenfing on the temperature
 function showValue(temp)
 {
+  console.log('showValue: ' + temp);
   temp = temp/100;
   var red = 0;
   var green = 0;
@@ -93,7 +94,7 @@ function showValue(temp)
   ball.material.uniforms.color.value = new THREE.Color('rgb(' + Math.round(red) +', ' + Math.round(green) + ', '+ Math.round(blue) + ')');
   ball2.material.uniforms.color.value = new THREE.Color('rgb(' + Math.round(red) +', ' + Math.round(green) + ', '+ Math.round(blue) + ')');
   renderer.render( scene, camera );
-  document.getElementById("range").innerHTML=temp*100;
+  //document.getElementById("range").innerHTML=temp*100;
 }
 
 //animates the star
