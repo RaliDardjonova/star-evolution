@@ -16,8 +16,7 @@
       var slider = e.target,
         valueSpanId = '#' + slider.id + 'Value';
 
-<<<<<<< HEAD
-      if (slider.id == 'tempRange') {
+      if (slider.id == temperatureSliderId) {
         if(e.value == 0)
         {
           showValue(6000);
@@ -25,15 +24,12 @@
         else {
           showValue(1000);
         }
-=======
-      if (slider.id == temperatureSliderId) {
-        showValue(e.value);
+
+        $(valueSpanId).html(Math.pow(10, e.value));
       } else if (slider.id == lifespanSliderId) {
         statsView.html(timeControl.update(e.value));
->>>>>>> 11706de61c66f5062756f9718bbaaf4296c73a9c
+        $(valueSpanId).html(slider.value);
       }
-
-    	$(valueSpanId).html(Math.pow(10, e.value));
     });
 
     for (var i = 0; i < sliders.length; i++) {
