@@ -100,20 +100,54 @@ function showValue(temp)
 //animates the star
 var curr;
 animate = function (t)
-{
-  if(t<230)
+{ if(t==1)
   {
-   sphere.scale.x = 1 + t/1000;
-   sphere.scale.y = 1 + t/1000;
-   sphere.scale.z = 1 + t/1000;
-   ball.scale.x = 1 + t/1000;
-   ball.scale.y = 1 + t/1000;
-   ball.scale.z = 1 + t/1000;
-   ball2.scale.x = 1 + t/1000;
-   ball2.scale.y = 1 + t/1000;
-   ball2.scale.z = 1 + t/1000;
+    sphere.scale.set(0.9, 0.9, 0.9);
+    ball.scale.set(0.9, 0.9, 0.9);
+    ball2.scale.set(0.9, 0.9, 0.9);
+  }
+  if(t==30)
+  {
+    showValue(5800);
+    sphere.scale.set(10/9, 10/9, 10/9);
+    ball.scale.set(10/9, 10/9, 10/9);
+    ball2.scale.set(10/9, 10/9, 10/9);
   }
 
+  if(t==70)
+  {
+    showValue(5600);
+    sphere.scale.set(1.1, 1.1, 1.1);
+    ball.scale.set(1.1, 1.1, 1.1);
+    ball2.scale.set(1.1, 1.1, 1.1);
+  }
+
+  if(t==100)
+  {
+    showValue(3500);
+    camera.position.set(0, 0, 25);
+    sphere.scale.set(10, 10, 10);
+    ball.scale.set(10, 10, 10);
+    ball2.scale.set(10, 10, 10);
+  }
+
+  if(t==120)
+  {
+    showValue(12000);
+    camera.position.set(0, 0, 0.5);
+    sphere.scale.set(0.01, 0.01, 0.01);
+    ball.scale.set(0.01, 0.01, 0.01);
+    ball2.scale.set(0.01, 0.01, 0.01);
+  }
+
+  if(t==130)
+  {
+    showValue(11900);
+    camera.position.set(0, 0, 0.5);
+    sphere.scale.set(0.01, 0.01, 0.01);
+    ball.scale.set(0.01, 0.01, 0.01);
+    ball2.scale.set(0.01, 0.01, 0.01);
+  }
   //animateCorona(t);
 
 }
