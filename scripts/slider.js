@@ -1,12 +1,27 @@
-(function ($) {
+(function ($, config) {
   var massSlider = $('#tempRange'),
-    lifespanSlide = $('#lifespan');
+    timeSlider = $('#lifespan');
 
   function setStyle(slider, startPoints = [0]) {
     $(slider).slider();
   }
 
+  function initTimeSlider() {
+    timeSlider
+      .attr('data-slider-max', config.framesCount)
+      .attr('max', config.framesCount);
+
+    var sliderSibling = timeSlider.siblings('.slider').first(),
+      handles = sliderSibling.children('.slider-handle');
+
+    console.log(sliderSibling);
+    console.log(handles);
+
+    handles.attr('aria-valuemax', config.framesCount);
+  }
+
   $(document).ready(function () {
+    initTimeSlider();
     var sliders = $('input[type="range"]');
     setSliderStyle(sliders);
     bindSliderEvents(sliders);
@@ -35,7 +50,7 @@
         var mass = Math.pow(10, e.value);
         value = mass;
         onMassSliderSlide(e.value);
-      } else if (slider.attr('id') == lifespanSlider.attr('id')) {
+      } else if (slider.attr('id') == timeSlider.attr('id')) {
         statsView.html(timeControl.update(e.value));
       }
 
@@ -74,4 +89,4 @@
       displayValueOnTooltip(massSlider, mass);
     });
   }
-})(jQuery);
+})(jQuery, CONFIG);
