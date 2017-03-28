@@ -25,9 +25,9 @@
 			    <span>Слънчеви маси: <span id="tempRangeValue">1</span></span>
 					<br>
 					<br>
-					<button type="submit" onclick="animateLife(document.getElementById('tempRange'))" class="btn btn-default">Пусни анимацията</button>
+					<button type="submit" onclick="Start(document.getElementById('tempRange'))" class="btn btn-default">Пусни анимацията</button>
+                    <button type="submit" onclick="Pause()" class="btn btn-default">Пауза</button>
 				</div>
-
 			</div>
 		</div>
 
@@ -77,9 +77,8 @@
 			//controling with the mouse
 			var controls = new THREE.TrackballControls( camera,  renderer.domElement );
 			controls.rotateSpeed = 1.0;
-			controls.zoomSpeed = 1.2;
 			controls.panSpeed = 0.8;
-			controls.noZoom = false;
+			controls.noZoom = true;
 			controls.noPan = false;
 			controls.staticMoving = true;
 			controls.dynamicDampingFactor = 0.3;
@@ -160,16 +159,33 @@
 			}
 
 			var k=0;
+            var isPaused =true;
 			function animateLife(mass)
-			{
-				requestAnimationFrame(animateLife);
-				if(animate) animate(k++);
-				controls.update();
-				renderer.render(scene, camera);
+			{   
+                if(!isPaused)
+                {
+                    requestAnimationFrame(animateLife);
+				    if(animate) animate(k++);
+                    //document.write(k + '<br>');
+                    document.getElementById("range").innerHTML=k;
+				    controls.update();
+				    renderer.render(scene, camera);
+                }	
 			}
-
+            
+            function Start(mass)
+            {
+                isPaused = false;
+                animateLife(mass);
+            }
+            
+            function Pause()
+            {
+                isPaused = true;
+            }
 			drawFrame();
 
 		</script>
+        <span id="range">1</span>
 	</body>
 </html>
