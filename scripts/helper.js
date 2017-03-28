@@ -94,7 +94,6 @@ function showValue(temp)
   ball.material.uniforms.color.value = new THREE.Color('rgb(' + Math.round(red) +', ' + Math.round(green) + ', '+ Math.round(blue) + ')');
   ball2.material.uniforms.color.value = new THREE.Color('rgb(' + Math.round(red) +', ' + Math.round(green) + ', '+ Math.round(blue) + ')');
   renderer.render( scene, camera );
-  //document.getElementById("range").innerHTML=temp*100;
 }
 
 //animates the star
@@ -109,9 +108,9 @@ animate = function (t)
   if(t==30)
   {
     showValue(5800);
-    sphere.scale.set(10/9, 10/9, 10/9);
-    ball.scale.set(10/9, 10/9, 10/9);
-    ball2.scale.set(10/9, 10/9, 10/9);
+    sphere.scale.set(1, 1, 1);
+    ball.scale.set(1, 1, 1);
+    ball2.scale.set(1, 1, 1);
   }
 
   if(t==70)
@@ -148,6 +147,17 @@ animate = function (t)
     ball.scale.set(0.01, 0.01, 0.01);
     ball2.scale.set(0.01, 0.01, 0.01);
   }
+
+    if(t==150)
+    {
+        isPaused = true;
+        showValue(6000);
+        sphere.scale.set(0.9, 0.9,0.9);
+        ball.scale.set(0.9, 0.9, 0.9);
+        ball2.scale.set(0.9, 0.9, 0.9);
+        camera.position.set(0,0, 8);
+        k=0;
+    }
   //animateCorona(t);
 
 }
