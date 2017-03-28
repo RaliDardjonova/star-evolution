@@ -15,7 +15,6 @@ scene.add(backgroundMesh);
 //changes colour depenfing on the temperature
 function showValue(temp)
 {
-  console.log('showValue: ' + temp);
   temp = temp/100;
   var red = 0;
   var green = 0;
