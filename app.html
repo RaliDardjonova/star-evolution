@@ -26,7 +26,7 @@
 					<br>
 					<br>
 					<button type="submit" onclick="Start(document.getElementById('tempRange'))" class="btn btn-default">Пусни анимацията</button>
-                    <button type="submit" onclick="Pause()" class="btn btn-default">Пауза</button>
+					<button type="submit" onclick="Pause()" class="btn btn-default">Пауза</button>
 				</div>
 			</div>
 		</div>
@@ -40,6 +40,7 @@
 		<script src="scripts/helper.js"></script>
 		<script src="scripts/timeControl.js"></script>
 		<script src="scripts/slider.js"></script>
+		<script src="data/sundata.js"></script>
 
     <!-- Custom Shader Code -------------------------->
     <script id="vertexShader" type="x-shader/x-vertex">
@@ -111,7 +112,7 @@
 			scene.add( new THREE.AmbientLight('white',2) );
 
       // shader for the glow
-      var customMaterial = new THREE.ShaderMaterial(
+      var coronaFlareMaterial = new THREE.ShaderMaterial(
       {
         uniforms: { color: {type: "c", value: new THREE.Color("rgb(0, 0, 0)")}},
         vertexShader:   document.getElementById( 'vertexShader'   ).textContent,
@@ -123,13 +124,13 @@
 				polygonOffsetUnits: 100,
         transparent: true
       }   );
-      var ballGeometry = new THREE.SphereGeometry( 1.1, 32, 16 );
-			ballGeometry.dynamic = true;
-      var ball = new THREE.Mesh( ballGeometry, customMaterial );
-      scene.add( ball );
+      var coronaFlareGeometry = new THREE.SphereGeometry( 1.1, 32, 16 );
+			coronaFlareGeometry.dynamic = true;
+      var coronaFlares = new THREE.Mesh( coronaFlareGeometry, coronaFlareMaterial );
+      scene.add( coronaFlares );
 
 			//---------------------------------------------------
-			var customMaterial2 = new THREE.ShaderMaterial(
+			var coronaGlowMaterial = new THREE.ShaderMaterial(
 			{
 				uniforms: { color: {type: "c", value: new THREE.Color("rgb(0, 0, 0)")}},
 				vertexShader:   document.getElementById( 'vertexShader'   ).textContent,
@@ -139,37 +140,43 @@
 				transparent: true
 			}   );
 
-			var ballGeometry2 = new THREE.SphereGeometry( 1.2, 32, 16 );
-			var ball2 = new THREE.Mesh( ballGeometry2, customMaterial2 );
-			scene.add( ball2 );
+			var coronaGlowGeometry = new THREE.SphereGeometry( 1.2, 32, 16 );
+			var coronaGlow = new THREE.Mesh( coronaGlowGeometry, coronaGlowMaterial );
+			scene.add( coronaGlow );
 			//----------------------------------------------
 			var previous2 = [];
 
-			for (var i=0; i<ballGeometry.vertices.length; i++)
+			for (var i=0; i<coronaFlareGeometry.vertices.length; i++)
 			{
 				previous2[i] = 1;
 			}
-			showValue(6000);
-      var t = 0;
+			visualizeColour(6000);
+      var animateCoronaFrames = 0;
       function drawFrame()
 			{
 				requestAnimationFrame( drawFrame );
-        if (animateCorona) animateCorona(t++);
+        if (animateCorona) animateCorona(animateCoronaFrames++);
 				controls.update();
 				renderer.render( scene, camera );
 			}
 
 			var k=0,
 				framesCount = 150;
-
+			var mass1;
 			function animateLife(mass)
 			{
+				if(k==0)
+				{
+					mass1 = mass;
+					document.getElementById("range").innerHTML=mass;
+				}
         if(!isPaused)
         {
             requestAnimationFrame(animateLife);
-    				if(animate) animate(k++);
+    				if(animateSun) animateSun(k++);
             //document.write(k + '<br>');
             document.getElementById("range").innerHTML=k;
+						document.getElementById("sundata").innerHTML=sunData[k/2]['time'];
 				    controls.update();
 				    renderer.render(scene, camera);
         }
@@ -188,7 +195,8 @@
 			drawFrame();
 
 		</script>
-        <span id="range">1</span>
+        Frames: <span id="range">1</span>
+				<br>
+				Years: <span id="sundata">1</span>
 	</body>
 </html>
-//djwadhodhowidh

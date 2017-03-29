@@ -13,7 +13,7 @@ backgroundMesh.material.depthWrite = false;
 scene.add(backgroundMesh);
 */
 //changes colour depenfing on the temperature
-function showValue(temp)
+function visualizeColour(temp)
 {
   temp = temp/100;
   var red = 0;
@@ -90,74 +90,96 @@ function showValue(temp)
     }
   }
   sphere.material.color.set( 'rgb('+ Math.round(red) +', ' + Math.round(green) + ', '+ Math.round(blue) + ')');
-  ball.material.uniforms.color.value = new THREE.Color('rgb(' + Math.round(red) +', ' + Math.round(green) + ', '+ Math.round(blue) + ')');
-  ball2.material.uniforms.color.value = new THREE.Color('rgb(' + Math.round(red) +', ' + Math.round(green) + ', '+ Math.round(blue) + ')');
+  coronaFlares.material.uniforms.color.value = new THREE.Color('rgb(' + Math.round(red) +', ' + Math.round(green) + ', '+ Math.round(blue) + ')');
+  coronaGlow.material.uniforms.color.value = new THREE.Color('rgb(' + Math.round(red) +', ' + Math.round(green) + ', '+ Math.round(blue) + ')');
   renderer.render( scene, camera );
 }
 
 //animates the star
-var curr;
-animate = function (t)
+animate1 = function (t)
 { if(t==1)
   {
     sphere.scale.set(0.9, 0.9, 0.9);
-    ball.scale.set(0.9, 0.9, 0.9);
-    ball2.scale.set(0.9, 0.9, 0.9);
+    coronaFlares.scale.set(0.9, 0.9, 0.9);
+    coronaGlow.scale.set(0.9, 0.9, 0.9);
   }
   if(t==30)
   {
-    showValue(5800);
+    visualizeColour(5800);
     sphere.scale.set(1, 1, 1);
-    ball.scale.set(1, 1, 1);
-    ball2.scale.set(1, 1, 1);
+    coronaFlares.scale.set(1, 1, 1);
+    coronaGlow.scale.set(1, 1, 1);
   }
 
   if(t==70)
   {
-    showValue(5600);
+    visualizeColour(5600);
     sphere.scale.set(1.1, 1.1, 1.1);
-    ball.scale.set(1.1, 1.1, 1.1);
-    ball2.scale.set(1.1, 1.1, 1.1);
+    coronaFlares.scale.set(1.1, 1.1, 1.1);
+    coronaGlow.scale.set(1.1, 1.1, 1.1);
   }
 
   if(t==100)
   {
-    showValue(3500);
+    visualizeColour(3500);
     camera.position.set(0, 0, 25);
     sphere.scale.set(10, 10, 10);
-    ball.scale.set(10, 10, 10);
-    ball2.scale.set(10, 10, 10);
+    coronaFlares.scale.set(10, 10, 10);
+    coronaGlow.scale.set(10, 10, 10);
   }
 
   if(t==120)
   {
-    showValue(12000);
+    visualizeColour(12000);
     camera.position.set(0, 0, 0.5);
     sphere.scale.set(0.01, 0.01, 0.01);
-    ball.scale.set(0.01, 0.01, 0.01);
-    ball2.scale.set(0.01, 0.01, 0.01);
+    coronaFlares.scale.set(0.01, 0.01, 0.01);
+    coronaGlow.scale.set(0.01, 0.01, 0.01);
   }
 
   if(t==130)
   {
-    showValue(11900);
+    visualizeColour(11900);
     camera.position.set(0, 0, 0.5);
     sphere.scale.set(0.01, 0.01, 0.01);
-    ball.scale.set(0.01, 0.01, 0.01);
-    ball2.scale.set(0.01, 0.01, 0.01);
+    coronaFlares.scale.set(0.01, 0.01, 0.01);
+    coronaGlow.scale.set(0.01, 0.01, 0.01);
   }
 
     if(t==150)
     {
         isPaused = true;
-        showValue(6000);
+        visualizeColour(6000);
         sphere.scale.set(0.9, 0.9,0.9);
-        ball.scale.set(0.9, 0.9, 0.9);
-        ball2.scale.set(0.9, 0.9, 0.9);
+        coronaFlares.scale.set(0.9, 0.9, 0.9);
+        coronaGlow.scale.set(0.9, 0.9, 0.9);
         camera.position.set(0,0, 8);
         k=0;
     }
   //animateCorona(t);
+}
+
+function animateSun(t)
+{
+  if(t%2==0 && t<185)
+  {
+    visualizeColour(sunData[t/2]['temperature']);
+    sphere.scale.set(sunData[t/2]['radius'], sunData[t/2]['radius'], sunData[t/2]['radius']);
+    coronaFlares.scale.set(sunData[t/2]['radius'], sunData[t/2]['radius'], sunData[t/2]['radius']);
+    coronaGlow.scale.set(sunData[t/2]['radius'], sunData[t/2]['radius'], sunData[t/2]['radius']);
+
+  }
+
+  if(t==185)
+  {
+      isPaused = true;
+      visualizeColour(6000);
+      sphere.scale.set(0.97, 0.97,0.97);
+      coronaFlares.scale.set(0.97, 0.97, 0.97);
+      coronaGlow.scale.set(0.97, 0.97, 0.97);
+      camera.position.set(0,0, 8);
+      k=0;
+  }
 
 }
 
@@ -176,12 +198,12 @@ function animateCorona(t)
   sphere.geometry.verticesNeedUpdate = true;
 
 
-  for (var i=0; i<ballGeometry.vertices.length; i += 1)
+  for (var i=0; i<coronaFlareGeometry.vertices.length; i += 1)
   {	curr = 0.95 + 0.1*Math.sin( i%5 + t/100);
-    ball.geometry.vertices[i].multiplyScalar(1/previous2[i]);
-    ball.geometry.vertices[i].multiplyScalar(curr);
+    coronaFlares.geometry.vertices[i].multiplyScalar(1/previous2[i]);
+    coronaFlares.geometry.vertices[i].multiplyScalar(curr);
     previous2[i] = curr;
   }
-  ball.geometry.computeVertexNormals();
-  ball.geometry.verticesNeedUpdate = true;
+  coronaFlares.geometry.computeVertexNormals();
+  coronaFlares.geometry.verticesNeedUpdate = true;
 }
