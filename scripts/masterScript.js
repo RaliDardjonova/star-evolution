@@ -99,6 +99,7 @@ for (var i=0; i<coronaFlareGeometry.vertices.length; i++)
 {
   previous2[i] = 1;
 }
+
 visualizeColour(6000);
 var animateCoronaFrames = 0;
 function drawFrame()
@@ -123,20 +124,25 @@ function animateLife()
   if(!isPaused)
   {
       requestAnimationFrame(animateLife);
-      if(MASS == masses.sun)
+      console.log('MASS: ' + MASS);
+      var selectedStarData;
+      if(MASS == CONFIG.stars.sun.mass)
       {
+        if(animateStar) animateStar(k++, v, sunData, 200, 800);
+        selectedStarData = sunData;
+      } else if (MASS == CONFIG.stars.star1.mass) {
         if(animateStar) animateStar(k++, v, sunData);
-      } else if (MASS == masses.star1) {
-
-      } else if (MASS == masses.star2) {
-
-      } else if (MASS == masses.star3) {
-
-      } else if (MASS == masses.star4) {
-
+      } else if (MASS == CONFIG.stars.star2.mass) {
+        if(animateStar) animateStar(k++, v, star2Data,  0.22, 1);
+        selectedStarData = star2Data;
+      } else if (MASS == CONFIG.masses.stars.star3.mass) {
+        if(animateStar) animateStar(k++, v, sunData);
+      } else if (MASS == CONFIG.masses.stars.star4.mass) {
+        if(animateStar) animateStar(k++, v, sunData);
       }
+
       timeControl.update(k);
-      updateDataView(k);
+      updateDataView(k, selectedStarData);
       controls.update();
       renderer.render(scene, camera);
   }
@@ -155,10 +161,10 @@ function Pause()
 }
 drawFrame();
 
-function updateDataView(k) {
+function updateDataView(k, starData) {
   document.getElementById("range").innerHTML=k;
-  var sunDataIndex = Math.floor(k/v);
-  document.getElementById("sundata").innerHTML=sunData[sunDataIndex]['time'];
-  document.getElementById("sundata-temperature").innerHTML=sunData[sunDataIndex]['temperature'];
-  document.getElementById("sundata-radius1").innerHTML= sunData[sunDataIndex]['radius'];
+  var starDataIndex = Math.floor(k/v);
+  document.getElementById("sundata").innerHTML=starData[starDataIndex]['time'];
+  document.getElementById("sundata-temperature").innerHTML=starData[starDataIndex]['temperature'];
+  document.getElementById("sundata-radius1").innerHTML= starData[starDataIndex]['radius'];
 }
