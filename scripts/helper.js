@@ -159,25 +159,53 @@ animate1 = function (t)
   //animateCorona(t);
 }
 
+function getNewSize(Rmax, Rold, p)
+{
+  var Rnew=(1-((Rmax-Rold)/(p*Rmax)))*Rmax;
+  return Rnew;
+}
+
 function animateSun(t)
 {
-  if(t%2==0 && t<185)
+  var v=5;
+  var Rnew;
+  camera.position.set(0,0, 800);
+  if(t%v==0 && t<221*v)
   {
-    visualizeColour(sunData[t/2]['temperature']);
-    sphere.scale.set(sunData[t/2]['radius'], sunData[t/2]['radius'], sunData[t/2]['radius']);
-    coronaFlares.scale.set(sunData[t/2]['radius'], sunData[t/2]['radius'], sunData[t/2]['radius']);
-    coronaGlow.scale.set(sunData[t/2]['radius'], sunData[t/2]['radius'], sunData[t/2]['radius']);
-
+    Rnew = getNewSize(200, sunData[t/v]['radius'], 1.2);
+    visualizeColour(sunData[t/v]['temperature']);
+    sphere.scale.set(Rnew, Rnew, Rnew);
+    coronaFlares.scale.set(Rnew, Rnew, Rnew);
+    coronaGlow.scale.set(Rnew, Rnew, Rnew);
   }
 
-  if(t==185)
+  if(t%v==0 && t>=221*v && t<255*v)
+  {
+    Rnew = getNewSize(200, sunData[t/v]['radius'], 1.2);
+    visualizeColour(sunData[t/v]['temperature']);
+    sphere.scale.set(Rnew, Rnew, Rnew);
+    coronaFlares.scale.set(Rnew, Rnew, Rnew);
+    coronaGlow.scale.set(Rnew, Rnew, Rnew);
+    //camera.position.set(0,0, 700);
+  }
+
+  if(t%v==0 && t>=255*v && t<260*v)
+  {
+      Rnew = getNewSize(200, sunData[t/v]['radius'], 1.2);
+      visualizeColour(sunData[t/v]['temperature']);
+      sphere.scale.set(Rnew, Rnew, Rnew);
+      coronaFlares.scale.set(Rnew, Rnew, Rnew);
+      coronaGlow.scale.set(Rnew, Rnew, Rnew);
+      //camera.position.set(0,0, 8);
+  }
+  if(t==260*v)
   {
       isPaused = true;
       visualizeColour(6000);
       sphere.scale.set(0.97, 0.97,0.97);
       coronaFlares.scale.set(0.97, 0.97, 0.97);
       coronaGlow.scale.set(0.97, 0.97, 0.97);
-      camera.position.set(0,0, 8);
+      //camera.position.set(0,0, 8);
       k=0;
   }
 
