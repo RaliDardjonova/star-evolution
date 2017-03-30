@@ -170,7 +170,7 @@ function animateSun(t)
 
   }
 
-  if(t==185)
+  if(t==CONFIG.framesCount)
   {
       isPaused = true;
       visualizeColour(6000);

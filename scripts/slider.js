@@ -14,9 +14,6 @@
     var sliderSibling = timeSlider.siblings('.slider').first(),
       handles = sliderSibling.children('.slider-handle');
 
-    console.log(sliderSibling);
-    console.log(handles);
-
     handles.attr('aria-valuemax', config.framesCount);
   }
 
@@ -50,8 +47,6 @@
         var mass = Math.pow(10, e.value);
         value = mass;
         onMassSliderSlide(e.value);
-      } else if (slider.attr('id') == timeSlider.attr('id')) {
-        statsView.html(timeControl.update(e.value));
       }
 
       $(valueSpanId).html(value);

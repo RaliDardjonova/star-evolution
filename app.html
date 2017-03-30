@@ -66,6 +66,14 @@
     <!--------------------------------------------------------------->
 
 		<script>
+			var timeSlider = $('#lifespan'),
+				timeControl = new TimeControl(timeSlider);
+
+			timeSlider.on('change', function (e) {
+				console.log(e.value.newValue);
+				k = parseInt(e.value.newValue, 10);
+			});
+
 			var sceneView = $('#scene');
 			var renderer = new THREE.WebGLRenderer();
 			renderer.setSize(sceneView.width(), window.innerHeight/2 );
@@ -160,8 +168,7 @@
 				renderer.render( scene, camera );
 			}
 
-			var k=0,
-				framesCount = 150;
+			var k=0;
 			var mass1;
 			function animateLife(mass)
 			{
@@ -174,6 +181,8 @@
         {
             requestAnimationFrame(animateLife);
     				if(animateSun) animateSun(k++);
+						timeControl.update(k);
+
             //document.write(k + '<br>');
             document.getElementById("range").innerHTML=k;
 						document.getElementById("sundata").innerHTML=sunData[k/2]['time'];
