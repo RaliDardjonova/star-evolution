@@ -165,15 +165,15 @@ function getNewSize(Rmax, Rold, p)
   return Rnew;
 }
 
-function animateSun(t)
+function animateStar(t, v, starData)
 {
-  var v=5;
+  //var v=5;
   var Rnew;
   camera.position.set(0,0, 800);
   if(t%v==0 && t<221*v)
   {
-    Rnew = getNewSize(200, sunData[t/v]['radius'], 1.2);
-    visualizeColour(sunData[t/v]['temperature']);
+    Rnew = getNewSize(200, starData[t/v]['radius'], 1.2);
+    visualizeColour(starData[t/v]['temperature']);
     sphere.scale.set(Rnew, Rnew, Rnew);
     coronaFlares.scale.set(Rnew, Rnew, Rnew);
     coronaGlow.scale.set(Rnew, Rnew, Rnew);
@@ -181,8 +181,8 @@ function animateSun(t)
 
   if(t%v==0 && t>=221*v && t<255*v)
   {
-    Rnew = getNewSize(200, sunData[t/v]['radius'], 1.2);
-    visualizeColour(sunData[t/v]['temperature']);
+    Rnew = getNewSize(200, starData[t/v]['radius'], 1.2);
+    visualizeColour(starData[t/v]['temperature']);
     sphere.scale.set(Rnew, Rnew, Rnew);
     coronaFlares.scale.set(Rnew, Rnew, Rnew);
     coronaGlow.scale.set(Rnew, Rnew, Rnew);
@@ -191,20 +191,20 @@ function animateSun(t)
 
   if(t%v==0 && t>=255*v && t<260*v)
   {
-      Rnew = getNewSize(200, sunData[t/v]['radius'], 1.2);
-      visualizeColour(sunData[t/v]['temperature']);
+      Rnew = getNewSize(200, starData[t/v]['radius'], 1.2);
+      visualizeColour(starData[t/v]['temperature']);
       sphere.scale.set(Rnew, Rnew, Rnew);
       coronaFlares.scale.set(Rnew, Rnew, Rnew);
       coronaGlow.scale.set(Rnew, Rnew, Rnew);
       //camera.position.set(0,0, 8);
   }
-  if(t==260*v)
+  if(t==maxFrames*v)
   {
       isPaused = true;
       visualizeColour(6000);
-      sphere.scale.set(0.97, 0.97,0.97);
-      coronaFlares.scale.set(0.97, 0.97, 0.97);
-      coronaGlow.scale.set(0.97, 0.97, 0.97);
+      //sphere.scale.set(0.97, 0.97,0.97);
+      //coronaFlares.scale.set(0.97, 0.97, 0.97);
+      //coronaGlow.scale.set(0.97, 0.97, 0.97);
       //camera.position.set(0,0, 8);
       k=0;
   }

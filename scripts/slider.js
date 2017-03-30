@@ -38,14 +38,19 @@
   }
 
   function addSlideEvent(sliders) {
+    var massSliderValues = [0.1, 0.16, 1, 10, 100];
     sliders.on("slide", function(e) {
       var slider = $(e.target),
         valueSpanId = '#' + slider.attr('id') + 'Value';
 
       var value = e.value;
       if (slider.attr('id') == massSlider.attr('id')) {
-        var mass = Math.pow(10, e.value);
-        value = mass;
+        var massSliderIndex = e.value + 1;
+        value = massSliderValues[massSliderIndex];
+        MASS = value;
+
+        console.log("MASS: " + MASS);
+
         //onMassSliderSlide(e.value);
       }
 
