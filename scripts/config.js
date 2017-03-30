@@ -1,3 +1,3 @@
 CONFIG = {
-  framesCount: 150,
+  framesCount: 185,
 }

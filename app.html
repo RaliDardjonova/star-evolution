@@ -7,26 +7,51 @@
 		<meta charset="UTF-8">
 		<link href="libs/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
 		<link href="libs/bootstrap-slider/bootstrap-slider.min.css" rel="stylesheet">
+		<link href="styles/styles.css" rel="stylesheet">
 	</head>
 	<body>
 		<div class="container">
 			<h1> Заглавие </h1>
 			<div class="row">
-				<div class="col-md-8">
+				<div id="scene-column" class="col-xs-12 col-sm-12 col-md-8">
 					<div id="scene"></div>
-					<label for="lifespan">Живот</label>
 					<input type="range" id="lifespan" data-slider-value="0" name="lifespan" data-slider-min="0" data-slider-step="1" data-slider-max="60">
-					<span>Секунди: <span id="lifespanValue"> </span> </span>
 					<p id="stats"></p>
 				</div>
-				<div class="col-md-4">
-					<input id="tempRange" type="range" data-slider-min="-1" data-slider-max="2" data-slider-value="0" data-slider-step="1"/>
+				<div class="col-xs-12 col-sm-12 col-md-4">
+					<span id="ex18-label-1" class="hidden">Example slider label</span>
+					<input id="tempRange" type="range" data-slider-min="-1" data-slider-max="2" data-slider-ticks="[-1, 0, 1, 2]" data-slider-value="0" data-slider-step="1" data-slider-ticks-labels='["0.1", "1", "10", "100"]' data-slider-tooltip="hide"/>
 					<br>
 			    <span>Слънчеви маси: <span id="tempRangeValue">1</span></span>
 					<br>
 					<br>
 					<button type="submit" onclick="Start(document.getElementById('tempRange'))" class="btn btn-default">Пусни анимацията</button>
 					<button type="submit" onclick="Pause()" class="btn btn-default">Пауза</button>
+					<hr>
+					<div class="col-xs-11 col-sm-11 col-md-11">
+						<div class="row">
+							Frames: <span id="range"></span>
+						</div>
+						<div class="row">
+							Years: <span id="sundata">0</span>
+						</div>
+						<div class="row">
+							Temperature: <span id="sundata-temperature">5800</span>
+						</div>
+						<div class="row">
+							Radius 1: <span id="sundata-radius1">0.97</span>
+						</div>
+						<div class="row">
+							Radius 2: <span id="sundata-radius2">0.965</span>
+						</div>
+					</div>
+					<div class="col-xs-1 col-sm-1 col-md-1">
+						<div class="row"><br></div>
+						<div class="row">Billion</div>
+						<div class="row">K</div>
+						<div class="row">SR</div>
+						<div class="row">SR</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -66,6 +91,15 @@
     <!--------------------------------------------------------------->
 
 		<script>
+			var timeSlider = $('#lifespan'),
+				timeControl = new TimeControl(timeSlider);
+
+			timeSlider.on('change', function (e) {
+				k = parseInt(e.value.newValue, 10);
+				updateDataView(k);
+				if(animateSun) animateSun(k++);
+			});
+
 			var sceneView = $('#scene');
 			var renderer = new THREE.WebGLRenderer();
 			renderer.setSize(sceneView.width(), window.innerHeight/2 );
@@ -160,8 +194,7 @@
 				renderer.render( scene, camera );
 			}
 
-			var k=0,
-				framesCount = 150;
+			var k=0;
 			var mass1;
 			function animateLife(mass)
 			{
@@ -174,9 +207,10 @@
         {
             requestAnimationFrame(animateLife);
     				if(animateSun) animateSun(k++);
+						timeControl.update(k);
+
             //document.write(k + '<br>');
-            document.getElementById("range").innerHTML=k;
-						document.getElementById("sundata").innerHTML=sunData[k/5]['time'];
+            updateDataView(k);
 				    controls.update();
 				    renderer.render(scene, camera);
         }
@@ -194,9 +228,15 @@
 	    }
 			drawFrame();
 
+			function updateDataView(k) {
+				document.getElementById("range").innerHTML=k;
+				var sunDataIndex = Math.floor(k/2);
+				document.getElementById("sundata").innerHTML=sunData[sunDataIndex]['time'];
+				document.getElementById("sundata-temperature").innerHTML=sunData[sunDataIndex]['temperature'];
+				document.getElementById("sundata-radius1").innerHTML=sunData[sunDataIndex]['radius'];
+				document.getElementById("sundata-radius2").innerHTML=sunData[sunDataIndex]['radius2'];
+			}
+
 		</script>
-        Frames: <span id="range">1</span>
-				<br>
-				Years: <span id="sundata">1</span>
 	</body>
 </html>
