@@ -1,3 +1,10 @@
+var k=0;
+var v = 5;
+
+$('#btn-start-animation').on('click', function () {
+  Start(MASS);
+});
+
 var MASS;
 var timeSlider = $('#lifespan'),
   timeControl = new TimeControl(timeSlider);
@@ -5,7 +12,7 @@ var timeSlider = $('#lifespan'),
 timeSlider.on('change', function (e) {
   k = parseInt(e.value.newValue, 10);
   updateDataView(k);
-  if(animateStar) animateStar(k++);
+  if(animateStar) animateStar(k++, v, sunData);
 });
 
 var sceneView = $('#scene');
@@ -102,8 +109,6 @@ function drawFrame()
   renderer.render( scene, camera );
 }
 
-var k=0;
-var v = 5;
 //var MASS;
 function animateLife()
 {
@@ -155,5 +160,5 @@ function updateDataView(k) {
   var sunDataIndex = Math.floor(k/v);
   document.getElementById("sundata").innerHTML=sunData[sunDataIndex]['time'];
   document.getElementById("sundata-temperature").innerHTML=sunData[sunDataIndex]['temperature'];
-  document.getElementById("sundata-radius1").innerHTML= MASS;//sunData[sunDataIndex]['radius'];
+  document.getElementById("sundata-radius1").innerHTML= sunData[sunDataIndex]['radius'];
 }

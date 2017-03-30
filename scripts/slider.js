@@ -49,8 +49,6 @@
         value = massSliderValues[massSliderIndex];
         MASS = value;
 
-        console.log("MASS: " + MASS);
-
         //onMassSliderSlide(e.value);
       }
 

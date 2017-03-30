@@ -167,48 +167,29 @@ function getNewSize(Rmax, Rold, p)
 
 function animateStar(t, v, starData)
 {
-  //var v=5;
-  var Rnew;
-  camera.position.set(0,0, 800);
-  if(t%v==0 && t<221*v)
-  {
-    Rnew = getNewSize(200, starData[t/v]['radius'], 1.2);
-    visualizeColour(starData[t/v]['temperature']);
-    sphere.scale.set(Rnew, Rnew, Rnew);
-    coronaFlares.scale.set(Rnew, Rnew, Rnew);
-    coronaGlow.scale.set(Rnew, Rnew, Rnew);
-  }
+  var maxFrames = starData.length * v;
 
-  if(t%v==0 && t>=221*v && t<255*v)
-  {
-    Rnew = getNewSize(200, starData[t/v]['radius'], 1.2);
-    visualizeColour(starData[t/v]['temperature']);
-    sphere.scale.set(Rnew, Rnew, Rnew);
-    coronaFlares.scale.set(Rnew, Rnew, Rnew);
-    coronaGlow.scale.set(Rnew, Rnew, Rnew);
-    //camera.position.set(0,0, 700);
-  }
-
-  if(t%v==0 && t>=255*v && t<260*v)
-  {
-      Rnew = getNewSize(200, starData[t/v]['radius'], 1.2);
-      visualizeColour(starData[t/v]['temperature']);
-      sphere.scale.set(Rnew, Rnew, Rnew);
-      coronaFlares.scale.set(Rnew, Rnew, Rnew);
-      coronaGlow.scale.set(Rnew, Rnew, Rnew);
-      //camera.position.set(0,0, 8);
-  }
-  if(t==maxFrames*v)
+  if(t >= maxFrames)
   {
       isPaused = true;
       visualizeColour(6000);
-      //sphere.scale.set(0.97, 0.97,0.97);
-      //coronaFlares.scale.set(0.97, 0.97, 0.97);
-      //coronaGlow.scale.set(0.97, 0.97, 0.97);
-      //camera.position.set(0,0, 8);
       k=0;
   }
 
+  $('#lifespan')
+    .attr('data-slider-max', maxFrames);
+
+  //var v=5;
+  var Rnew;
+  camera.position.set(0,0, 800);
+
+  if (t % v == 0) {
+    Rnew = getNewSize(200, starData[t/v]['radius'], 1.2);
+    visualizeColour(starData[t/v]['temperature']);
+    sphere.scale.set(Rnew, Rnew, Rnew);
+    coronaFlares.scale.set(Rnew, Rnew, Rnew);
+    coronaGlow.scale.set(Rnew, Rnew, Rnew);
+  }
 }
 
 function animateCorona(t)
