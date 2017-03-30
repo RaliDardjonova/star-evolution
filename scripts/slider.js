@@ -2,7 +2,7 @@
   var massSlider = $('#tempRange'),
     timeSlider = $('#lifespan');
 
-  function setStyle(slider, startPoints = [0]) {
+  function setStyle(slider) {
     $(slider).slider();
   }
 
@@ -46,7 +46,7 @@
       if (slider.attr('id') == massSlider.attr('id')) {
         var mass = Math.pow(10, e.value);
         value = mass;
-        onMassSliderSlide(e.value);
+        //onMassSliderSlide(e.value);
       }
 
       $(valueSpanId).html(value);

@@ -16,7 +16,7 @@ var TimeControl = (function ($, config) {
     // path holds the correct value, but when assigned the percentage
     // is halved, because why not.
     this.sliderHandles
-      .css('left', path * 2);
+      .css('left', path.toString() + '%');
   }
 
   return timeControl;
