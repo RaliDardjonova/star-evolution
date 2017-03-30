@@ -13,10 +13,22 @@ var TimeControl = (function ($, config) {
 
     this.sliderHandles = sliderHorizontal.children('.slider-handle');
 
-    // path holds the correct value, but when assigned the percentage
-    // is halved, because why not.
+    var cssPath = path.toString() + '%';
+
     this.sliderHandles
-      .css('left', path.toString() + '%');
+      .css('left', cssPath);
+
+    var sliderTrack = sliderHorizontal.children('.slider-track');
+
+    sliderTrack
+      .children('.slider-selection')
+      .first()
+      .css('width', cssPath);
+
+    sliderTrack
+      .children('.slider-track-high')
+      .first()
+      .css('width', (100 - path).toString() + '%');
   }
 
   return timeControl;

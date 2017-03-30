@@ -1,3 +1,11 @@
 .slider.slider-horizontal {
   width: 100%;
 }
+
+#scene-column>.slider>.slider-track>.slider-selection {
+  background: lightblue;
+}
+
+#scene-column>.slider>.slider-track>.slider-track-high  {
+  background: lightgrey;
+}

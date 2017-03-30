@@ -13,7 +13,7 @@
 		<div class="container">
 			<h1> Заглавие </h1>
 			<div class="row">
-				<div class="col-md-8">
+				<div id="scene-column" class="col-md-8">
 					<div id="scene"></div>
 					<input type="range" id="lifespan" data-slider-value="0" name="lifespan" data-slider-min="0" data-slider-step="1" data-slider-max="60">
 					<p id="stats"></p>
@@ -27,6 +27,17 @@
 					<br>
 					<button type="submit" onclick="Start(document.getElementById('tempRange'))" class="btn btn-default">Пусни анимацията</button>
 					<button type="submit" onclick="Pause()" class="btn btn-default">Пауза</button>
+					<hr>
+					Frames: <span id="range"></span>
+					<br>
+					Years: <span id="sundata">0</span>
+					<br>
+					Temperature: <span id="sundata-temperature">5800</span>
+					<br>
+					Radius 1: <span id="sundata-radius1">0.97</span>
+					<br>
+					Radius 2: <span id="sundata-radius2">0.965</span>
+					<br>
 				</div>
 			</div>
 		</div>
@@ -207,11 +218,11 @@
 				document.getElementById("range").innerHTML=k;
 				var sunDataIndex = Math.floor(k/2);
 				document.getElementById("sundata").innerHTML=sunData[sunDataIndex]['time'];
+				document.getElementById("sundata-temperature").innerHTML=sunData[sunDataIndex]['temperature'];
+				document.getElementById("sundata-radius1").innerHTML=sunData[sunDataIndex]['radius1'];
+				document.getElementById("sundata-radius2").innerHTML=sunData[sunDataIndex]['radius2'];
 			}
 
 		</script>
-        Frames: <span id="range">1</span>
-				<br>
-				Years: <span id="sundata">1</span>
 	</body>
 </html>
