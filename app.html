@@ -1,7 +1,9 @@
 <html>
 	<head>
 		<style>
-			body { margin-left: 10%; }
+			.container {
+				width: 100% !important;
+			}
 			canvas { width: 100%; height: 100% }
 		</style>
 		<meta charset="UTF-8">
@@ -13,14 +15,14 @@
 		<div class="container">
 			<h1> Заглавие </h1>
 			<div class="row">
-				<div id="scene-column" class="col-xs-12 col-sm-12 col-md-8">
+				<div id="scene-column" class="col-xs-12 col-sm-12 col-md-9">
 					<div id="scene"></div>
 					<input type="range" id="lifespan" data-slider-value="0" name="lifespan" data-slider-min="0" data-slider-step="1" data-slider-max="60">
 					<p id="stats"></p>
 				</div>
-				<div class="col-xs-12 col-sm-12 col-md-4">
+				<div class="col-xs-12 col-sm-12 col-md-3">
 					<span id="ex18-label-1" class="hidden">Example slider label</span>
-					<input id="tempRange" type="range" data-slider-min="-1" data-slider-max="3" data-slider-ticks="[-1, 0, 1, 2, 3]" data-slider-value="1" data-slider-step="1" data-slider-ticks-labels='["0.1", "0.16", "1", "10", "100"]' data-slider-tooltip="hide"/>
+					<input id="tempRange" type="range" data-slider-min="-1" data-slider-max="3" data-slider-ticks="[-1, 0, 1, 2, 3]" data-slider-value="1" data-slider-step="1" data-slider-ticks-labels='["0.1", "0.16", "1", "2.1", "100"]' data-slider-tooltip="hide"/>
 					<br>
 			    <span>Слънчеви маси: <span id="tempRangeValue">1</span></span>
 					<br>
@@ -63,6 +65,7 @@
 		<script src="scripts/slider.js"></script>
 		<script src="data/sundata.js"></script>
 		<script src="data/0.16.js"></script>
+		<script src="data/2.1.js"></script>
 
     <!-- Custom Shader Code -------------------------->
     <script id="vertexShader" type="x-shader/x-vertex">

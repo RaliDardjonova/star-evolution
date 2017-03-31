@@ -2,7 +2,7 @@ CONFIG = {
   framesCount: 260*5,
   stars: {
     star1: {
-      mass: 1,
+      mass: 0.1,
       initialRadius: 1
     },
     star2: {
@@ -14,8 +14,8 @@ CONFIG = {
       initialRadius: 0.94
     },
     star3: {
-      mass: 10,
-      initialRadius: 1
+      mass: 2.1,
+      initialRadius: 1.7
     },
     star4: {
       mass: 100,

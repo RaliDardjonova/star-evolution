@@ -17,7 +17,7 @@ timeSlider.on('change', function (e) {
 
 var sceneView = $('#scene');
 var renderer = new THREE.WebGLRenderer();
-renderer.setSize(sceneView.width(), window.innerHeight/2 );
+renderer.setSize(sceneView.width(), 2*window.innerHeight/3 + 20 );
 sceneView.append(renderer.domElement);
 
 var scene = new THREE.Scene();
@@ -135,9 +135,10 @@ function animateLife()
       } else if (MASS == CONFIG.stars.star2.mass) {
         if(animateStar) animateStar(k++, v, star2Data,  0.22, 1);
         selectedStarData = star2Data;
-      } else if (MASS == CONFIG.masses.stars.star3.mass) {
-        if(animateStar) animateStar(k++, v, sunData);
-      } else if (MASS == CONFIG.masses.stars.star4.mass) {
+      } else if (MASS == CONFIG.stars.star3.mass) {
+        if(animateStar) animateStar(k++, v, star3Data, 100, 400);
+        selectedStarData = star3Data;
+      } else if (MASS == CONFIG.stars.star4.mass) {
         if(animateStar) animateStar(k++, v, sunData);
       }
 

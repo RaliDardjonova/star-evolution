@@ -38,7 +38,7 @@
   }
 
   function addSlideEvent(sliders) {
-    var massSliderValues = [0.1, 0.16, 1, 10, 100];
+    var massSliderValues = [0.1, 0.16, 1, CONFIG.stars.star3.mass, 100];
     sliders.on("slide", function(e) {
       var slider = $(e.target),
         valueSpanId = '#' + slider.attr('id') + 'Value';
@@ -66,6 +66,11 @@
     } else if (mass = CONFIG.stars.star2.mass) {
       visualizeColour(2900);
       setRadius(0.22);
+      camera.position.set(0, 0, 8);
+    } else if (mass = CONFIG.stars.star3.mass)
+    {
+      visualizeColour(9800);
+      setRadius(1.7);
       camera.position.set(0, 0, 8);
     }
   }
