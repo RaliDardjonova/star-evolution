@@ -48,8 +48,7 @@
         var massSliderIndex = e.value + 1;
         value = massSliderValues[massSliderIndex];
         MASS = value;
-
-        console.log("MASS: " + MASS);
+        visualizeByMass(MASS);
 
         //onMassSliderSlide(e.value);
       }
@@ -57,6 +56,24 @@
       $(valueSpanId).html(value);
       displayValueOnTooltip(slider, value);
     });
+  }
+
+  function visualizeByMass(mass) {
+    if (mass == CONFIG.stars.sun.mass) {
+      visualizeColour(6000);
+      setRadius(0.94);
+      camera.position.set(0, 0, 8);
+    } else if (mass = CONFIG.stars.star2.mass) {
+      visualizeColour(2900);
+      setRadius(0.22);
+      camera.position.set(0, 0, 8);
+    }
+  }
+
+  function setRadius(Rnew) {
+    sphere.scale.set(Rnew, Rnew, Rnew);
+    coronaFlares.scale.set(Rnew, Rnew, Rnew);
+    coronaGlow.scale.set(Rnew, Rnew, Rnew);
   }
 
   function setSliderStyle(sliders) {

@@ -11,9 +11,15 @@ var TimeControl = (function ($, config) {
     var maxSteps = this.slider.attr('data-slider-max'),
       path = value / maxSteps * 100;
 
+    console.log('MaxSteps: ' + maxSteps);
+    console.log('Current value: ' + value);
+
     this.sliderHandles = sliderHorizontal.children('.slider-handle');
 
     var cssPath = path.toString() + '%';
+
+
+    console.log('PATH: ' + path);
 
     this.sliderHandles
       .css('left', cssPath);
