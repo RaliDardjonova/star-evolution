@@ -63,12 +63,11 @@
       visualizeColour(6000);
       setRadius(0.94);
       camera.position.set(0, 0, 8);
-    } else if (mass = CONFIG.stars.star2.mass) {
+    } else if (mass == CONFIG.stars.star2.mass) {
       visualizeColour(2900);
       setRadius(0.22);
       camera.position.set(0, 0, 8);
-    } else if (mass = CONFIG.stars.star3.mass)
-    {
+    } else if (mass == CONFIG.stars.star3.mass) {
       visualizeColour(9800);
       setRadius(1.7);
       camera.position.set(0, 0, 8);
